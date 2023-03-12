@@ -8,6 +8,7 @@ import Diary from "./pages/Diary";
 
 // 공용컴포넌트
 import MyButton from "./components/myButton";
+import MyHeader from "./components/myHearder";
 
 function App() {
   //<img src={process.env.PUBLIC_URL + `/assets/emotion1.png`} alt="" />가 작동을 하지 않는다면 이렇게 설정해서 사용할 수 있음
@@ -17,6 +18,15 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <MyHeader
+          headText={"app"}
+          leftChild={
+            <MyButton text={"왼쪽 버튼"} onClick={() => alert("왼쪽 클릭")} />
+          }
+          rightChild={
+            <MyButton text={"오른쪽 버튼"} onClick={() => alert('오른쪽 클릭')} />
+          }
+        />
         <h2>App.js</h2>
         {/* process.env.PUBLIC_URL 은 pulic 폴더로 바로 갈수 있는 경로 */}
         {/* <img src={process.env.PUBLIC_URL + "/assets/emotion1.png"} alt="" /> */}
