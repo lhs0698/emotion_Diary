@@ -1,3 +1,4 @@
+import React, { useReducer, useRef } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -6,54 +7,100 @@ import New from "./pages/New";
 import Edit from "./pages/Edit";
 import Diary from "./pages/Diary";
 
-// 공용컴포넌트
-import MyButton from "./components/myButton";
-import MyHeader from "./components/myHearder";
+const reducer = (state, action) => {
+  let newState = [];
+  switch (action.Type) {
+    case "INIT": {
+      return action.data;
+    }
+    case "CREATE": {
+      
+      newState = [action.data, ...state];
+      break;
+    }
+    case "REMOVE": {
+      newState = state.filter((it) => it.id !== action.targetId);
+      break;
+    }
+    case "EDIT": {
+      newState = state.map((it) =>
+        it.id === action.data.id ? { ...action.data } : it
+      );
+      break;
+    }
+
+    default:
+      return state;
+  }
+  return newState;
+};
+
+export const DiaryStateContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
+
 
 function App() {
-  //<img src={process.env.PUBLIC_URL + `/assets/emotion1.png`} alt="" />가 작동을 하지 않는다면 이렇게 설정해서 사용할 수 있음
-  // const env = process.env;
-  // env.PUBLIC_URL = env.PUBLIC_URL || "";
+  const [data, dispatch] = useReducer(reducer, []);
+
+  const dataId = useRef(0)
+
+  // 추가
+  const onCreate = (date, content, emotion) => {
+    dispatch({
+      type: "CREATE",
+      data: {
+        id: dataId.current,
+        data: new Date(date).getTime(),
+        content,
+        emotion,
+      },
+    });
+    dataId.current += 1;
+  };
+
+  // 삭제
+  const onRemove = (targetId) => {
+    dispatch({type: 'REMOVE', targetId})
+  }; 
+
+  // 수정
+  const onEdit = (targetId, date, content, emotion) => {
+    dispatch({ type: "EDIT",
+    data: {
+      id: targetId,
+      date: new Date(date).getTime(),
+      content,
+      emotion
+    }
+    });
+  };
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <MyHeader
-          headText={"app"}
-          leftChild={
-            <MyButton text={"왼쪽 버튼"} onClick={() => alert("왼쪽 클릭")} />
-          }
-          rightChild={
-            <MyButton text={"오른쪽 버튼"} onClick={() => alert('오른쪽 클릭')} />
-          }
-        />
-        <h2>App.js</h2>
-        {/* process.env.PUBLIC_URL 은 pulic 폴더로 바로 갈수 있는 경로 */}
-        {/* <img src={process.env.PUBLIC_URL + "/assets/emotion1.png"} alt="" /> */}
-        <MyButton
-          text={"버튼"}
-          onClick={() => alert("버튼클릭")}
-          type={"positive"}
-        />
-        <MyButton
-          text={"버튼"}
-          onClick={() => alert("버튼클릭")}
-          type={"negative"}
-        />
-        <MyButton
-          text={"버튼"}
-          onClick={() => alert("버튼클릭")}
-          type={"default"}
-        />
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/new" element={<New />}></Route>
-          <Route path="/edit" element={<Edit />}></Route>
-          <Route path="/diary/:id" element={<Diary />}></Route>
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <DiaryStateContext.Provider value={data}>
+      <DiaryDispatchContext.Provider
+        value={{
+          onCreate,
+          onEdit,
+          onRemove,
+        }}
+      >
+      <BrowserRouter>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/new" element={<New />}></Route>
+            <Route path="/edit" element={<Edit />}></Route>
+            <Route path="/diary/:id" element={<Diary />}></Route>
+          </Routes>
+        </div>
+      </BrowserRouter>
+      </DiaryDispatchContext.Provider>
+    </DiaryStateContext.Provider>
   );
 }
 
 export default App;
+
+//<img src={process.env.PUBLIC_URL + `/assets/emotion1.png`} alt="" />가 작동을 하지 않는다면 이렇게 설정해서 사용할 수 있음
+// const env = process.env;
+// env.PUBLIC_URL = env.PUBLIC_URL || "";
