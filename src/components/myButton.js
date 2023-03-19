@@ -1,5 +1,3 @@
-import React from "react";
-
 const MyButton = ({ text, type, onClick }) => {
 
   // btnType 설정 이유 
