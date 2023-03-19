@@ -1,8 +1,18 @@
+import React,{useState} from "react";
+
+import MyHeader from "../components/myHearder";
+
+
 const Home = () => {
+
+    const [curDate, setCurDate] = useState(new Date());
+
+    const headText = `${curDate.getFullYear()}년 ${curDate.getMonth()-1}월`
+    console.log(headText);
+
     return (
         <div>
-            <h1>Home</h1>
-            <div>이곳은 Home입니다</div>
+            <MyHeader headText={headText}/>
         </div>
     )
 }
