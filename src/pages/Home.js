@@ -9,7 +9,7 @@ import { DiaryStateContext } from "../App";
 const Home = () => {
   const diaryList = useContext(DiaryStateContext);
 
-  console.log(diaryList)
+//   console.log(diaryList)
   const [data, setData] = useState([]);
   const [curDate, setCurDate] = useState(new Date());
 
@@ -35,9 +35,9 @@ const Home = () => {
     }
   }, [diaryList, curDate]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+//   useEffect(() => {
+//     console.log(data);
+//   }, [data]);
 
   const increaseMonth = () => {
     setCurDate(
