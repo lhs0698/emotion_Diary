@@ -6,9 +6,9 @@ const Edit = () => {
     const [serachParams, setSearchParams] = useSearchParams();
 
     const id = serachParams.get('id');
-    console.log(id) 
+    // console.log(id) 
     const mode = serachParams.get('mode');
-    console.log(mode)
+    // console.log(mode)
 
     return (
         <div>

@@ -74,11 +74,8 @@ const dummyData = [
 
 
 function App() {
-
-  // console.log(new Date().getTime());
   const [data, dispatch] = useReducer(reducer, dummyData);
   const dataId = useRef(0)
-
   // 추가
   const onCreate = (date, content, emotion) => {
     dispatch({
