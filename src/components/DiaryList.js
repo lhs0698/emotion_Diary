@@ -47,7 +47,7 @@ const DiaryList = ({ diaryList }) => {
     };
 
     const compare = (a, b) => {
-      if (sortType === "lastest") {
+      if (sortType === "all") {
         return parseInt(b.date) - parseInt(a.date);
       } else {
         return parseInt(a.date) - parseInt(b.date);
@@ -60,6 +60,7 @@ const DiaryList = ({ diaryList }) => {
       filter === "all" ? copyList : copyList.filter((it) => filterCallBack(it));
     console.log(filteredList);
     const sortedList = filteredList.sort(compare);
+    console.log(sortedList)
     return sortedList;
   };
 
