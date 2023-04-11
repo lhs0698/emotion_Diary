@@ -9,7 +9,7 @@ import { DiaryStateContext } from "../App";
 const Home = () => {
   const diaryList = useContext(DiaryStateContext);
 
-//   console.log(diaryList)
+  //   console.log(diaryList)
   const [data, setData] = useState([]);
   const [curDate, setCurDate] = useState(new Date());
 
@@ -32,7 +32,16 @@ const Home = () => {
       setData(
         diaryList.filter((it) => firstDay <= it.date && it.date <= lastDay)
       );
-    } 
+      // const lastDay = new Date(
+      //   curDate.getFullYear(),
+      //   curDate.getMonth() + 1,
+      //   0
+      // ).getTime();
+
+      // setData(
+      //   diaryList.filter((it) => firstDay <= it.date && it.date < lastDay)
+      // );
+    }
   }, [diaryList, curDate]);
 
   // useEffect(() => {
@@ -58,7 +67,7 @@ const Home = () => {
         leftChild={<MyButton text={"<"} onClick={decreaseMonth} />}
         rightChild={<MyButton text={">"} onClick={increaseMonth} />}
       />
-      <DiaryList diaryList={data}/>
+      <DiaryList diaryList={data} />
     </div>
   );
 };

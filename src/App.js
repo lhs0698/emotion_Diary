@@ -14,7 +14,6 @@ const reducer = (state, action) => {
       return action.data;
     }
     case "CREATE": {
-      
       newState = [action.data, ...state];
       break;
     }
@@ -28,9 +27,8 @@ const reducer = (state, action) => {
       );
       break;
     }
-
     default:
-      return state;
+      return state
   }
   return newState;
 };
@@ -38,44 +36,44 @@ const reducer = (state, action) => {
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-
 const dummyData = [
   {
     id: 1,
-    emotion:1,
+    emotion: 1,
     content: "오늘의 일기",
-    date : 1679207026183
+    date: 1681216150460,
   },
   {
     id: 2,
-    emotion:2,
+    emotion: 2,
     content: "오늘의 일기2",
-    date : 1679207026184
+    date: 1681216150475,
   },
   {
     id: 3,
-    emotion:3,
+    emotion: 3,
     content: "오늘의 일기3",
-    date : 1679207026185
+    date: 1681216150479,
   },
   {
     id: 4,
-    emotion:4,
+    emotion: 4,
     content: "오늘의 일기4",
-    date : 1679207026186
+    date: 1681216150483,
   },
   {
     id: 5,
-    emotion:5,
+    emotion: 5,
     content: "오늘의 일기5",
-    date : 1679207026187
-  }
-]
+    date: 1681216150490,
+  },
+];
 
+// console.log(new Date().getTime())
 
 function App() {
   const [data, dispatch] = useReducer(reducer, dummyData);
-  const dataId = useRef(0)
+  const dataId = useRef(0);
   // 추가
   const onCreate = (date, content, emotion) => {
     dispatch({
@@ -92,18 +90,19 @@ function App() {
 
   // 삭제
   const onRemove = (targetId) => {
-    dispatch({type: 'REMOVE', targetId})
-  }; 
+    dispatch({ type: "REMOVE", targetId });
+  };
 
   // 수정
   const onEdit = (targetId, date, content, emotion) => {
-    dispatch({ type: "EDIT",
-    data: {
-      id: targetId,
-      date: new Date(date).getTime(),
-      content,
-      emotion
-    }
+    dispatch({
+      type: "EDIT",
+      data: {
+        id: targetId,
+        date: new Date(date).getTime(),
+        content,
+        emotion,
+      },
     });
   };
 
@@ -116,16 +115,16 @@ function App() {
           onRemove,
         }}
       >
-      <BrowserRouter>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/new" element={<New />}></Route>
-            <Route path="/edit" element={<Edit />}></Route>
-            <Route path="/diary/:id" element={<Diary />}></Route>
-          </Routes>
-        </div>
-      </BrowserRouter>
+        <BrowserRouter>
+          <div className="App">
+            <Routes>
+              <Route path="/" element={<Home />}></Route>
+              <Route path="/new" element={<New />}></Route>
+              <Route path="/edit" element={<Edit />}></Route>
+              <Route path="/diary/:id" element={<Diary />}></Route>
+            </Routes>
+          </div>
+        </BrowserRouter>
       </DiaryDispatchContext.Provider>
     </DiaryStateContext.Provider>
   );

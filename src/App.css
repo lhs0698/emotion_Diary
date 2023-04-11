@@ -207,7 +207,9 @@ hedaer button {
 
 /* DiaryEditor */
 
-.DiaryEditor {}
+.DiaryEditor {
+
+}
 
 .DiaryEditor section {
   margin-bottom: 40px;
@@ -240,6 +242,27 @@ hedaer button {
   gap: 2%;
 }
 
+.DiaryEditor textarea {
+  font-family: "Nanum Pen Script";
+  font-size: 20px;
+
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 200px;
+  resize: vertical;
+
+  border: none;
+  border-radius: 5px;
+  background-color: #ececec;
+
+  padding: 20px;
+}
+
+.DiaryEditor .control_box {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* EmotionItem */
 .EmotionItem {
   cursor: pointer;
@@ -252,6 +275,7 @@ hedaer button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  align-items: center;
 }
 
 .EmotionItem img {
@@ -262,3 +286,31 @@ hedaer button {
 .EmotionItem span {
   font-size: 18px;
 }
+
+.EmotionItem_off {
+  background-color: #ececec;
+}
+
+.EmotionItem_on_1 {
+  background-color: #64c964;
+  color: white;
+}
+
+.EmotionItem_on_2 {
+  background-color: #9dd772;
+  color: white;
+}
+.EmotionItem_on_3 {
+  background-color: #fdce17;
+  color: white;
+}
+.EmotionItem_on_4 {
+  background-color: #fd8446;
+  color: white;
+}
+
+.EmotionItem_on_5 {
+  background-color: #fd565f;
+  color: white; 
+}
+
