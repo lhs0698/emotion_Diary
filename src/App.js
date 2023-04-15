@@ -9,7 +9,7 @@ import Diary from "./pages/Diary";
 
 const reducer = (state, action) => {
   let newState = [];
-  switch (action.Type) {
+  switch (action.type) {
     case "INIT": {
       return action.data;
     }
@@ -28,7 +28,7 @@ const reducer = (state, action) => {
       break;
     }
     default:
-      return state
+      return state;
   }
   return newState;
 };
@@ -80,7 +80,7 @@ function App() {
       type: "CREATE",
       data: {
         id: dataId.current,
-        data: new Date(date).getTime(),
+        date: new Date(date).getTime(),
         content,
         emotion,
       },
