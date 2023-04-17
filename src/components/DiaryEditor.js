@@ -2,7 +2,7 @@ import MyHearder from "./MyHearder";
 import MyButton from "./MyButton";
 
 import { useNavigate } from "react-router-dom";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DiaryDispatchContext } from "./../App.js";
 
 import EmotionItem from "./EmotionItem";
@@ -57,7 +57,7 @@ const getStringDate = (date) => {
   return `${year}-${month}-${day}`;
 };
 
-const DiaryEditor = () => {
+const DiaryEditor = ({isEdit, originData}) => {
   const contentRef = useRef();
 
   const [date, setDate] = useState(getStringDate(new Date()));
@@ -80,6 +80,16 @@ const DiaryEditor = () => {
     onCreate(date, content, emotion);
     navigate("/", { replace: true });
   };
+  
+  useEffect(() => {
+    if(isEdit) {
+      console.log(isEdit)
+      setDate(getStringDate(new Date(parseInt(originData.date))));
+      setEmotion(originData.emotion);
+      setContent(originData.content); 
+      // console.log(originData.content)
+    }
+  },[isEdit,originData]);
 
   return (
     <div className="DiaryEditor">
