@@ -10,6 +10,9 @@ const DiaryItem = ({ id, emotion, content, date }) => {
     navigate(`/diary/${id}`)
   }
 
+  const goEdit = () => {
+    navigate(`/edit/${id}`)
+  }
   return (
     <div className="DiaryItem">
       <div
@@ -26,7 +29,7 @@ const DiaryItem = ({ id, emotion, content, date }) => {
         <div className="diray_content_prview">{content.slice(0, 25)}</div>
       </div>
       <div className="btn_wrapper">
-        <MyButton text={'수정하기'}/>
+        <MyButton text={'수정하기'} onClick={goEdit}/>
       </div>
     </div>
   );

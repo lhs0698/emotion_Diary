@@ -64,7 +64,7 @@ const DiaryEditor = ({isEdit, originData}) => {
   const [emotion, setEmotion] = useState(3);
   const [content, setContent] = useState("");
 
-  const { onCreate } = useContext(DiaryDispatchContext);
+  const { onCreate, onEdit } = useContext(DiaryDispatchContext);
 
   const handleClickEmotion = (emotion) => {
     setEmotion(emotion);
@@ -77,7 +77,16 @@ const DiaryEditor = ({isEdit, originData}) => {
       contentRef.current.focus();
       return;
     }
-    onCreate(date, content, emotion);
+
+    if(window.confirm(isEdit ? "일기를 수정하시겠습니까?" : "새로운 일기를 작성허시겠습니까?")) {
+      if(!isEdit) {
+        onCreate(date, content, emotion);
+      } else {
+        onEdit(originData.id, date, content, emotion);
+
+      }
+    }
+    
     navigate("/", { replace: true });
   };
   
@@ -94,7 +103,7 @@ const DiaryEditor = ({isEdit, originData}) => {
   return (
     <div className="DiaryEditor">
       <MyHearder
-        headText={"새 일기쓰기"}
+        headText={isEdit ? '일기 수정하기' : "새 일기쓰기"}
         leftChild={
           <MyButton text={"< 뒤로가기"} onClick={() => navigate(-1)} />
         }
