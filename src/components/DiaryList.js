@@ -34,7 +34,7 @@ const ControlMenu = ({ value, onChange, optionList }) => {
 const DiaryList = ({ diaryList }) => {
   const navigate = useNavigate();
 
-  const [sortType, setSortType] = useState("lastest");
+  const [sortType, setSortType] = useState("latest");
   const [filter, setFilter] = useState("all");
 
   const getProcessedDiaryList = () => {
@@ -47,7 +47,7 @@ const DiaryList = ({ diaryList }) => {
     };
 
     const compare = (a, b) => {
-      if (sortType === "all") {
+      if (sortType === "latest") {
         return parseInt(b.date) - parseInt(a.date);
       } else {
         return parseInt(a.date) - parseInt(b.date);

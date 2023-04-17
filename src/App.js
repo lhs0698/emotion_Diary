@@ -73,7 +73,8 @@ const dummyData = [
 
 function App() {
   const [data, dispatch] = useReducer(reducer, dummyData);
-  const dataId = useRef(0);
+  const dataId = useRef(6);
+  // useRef(0)이라면 새 일기를 추가할때 key가 같은것이 생성되서 버그가 생긴다.
   // 추가
   const onCreate = (date, content, emotion) => {
     dispatch({
