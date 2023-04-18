@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React,{ useState,  } from "react";
 import { useNavigate } from "react-router-dom";
 
 import DiaryItem from "./DiaryItem";
@@ -15,7 +15,10 @@ const filterOptionList = [
     { value : "bad", name: "안좋은 감정만"},
 ]
 
-const ControlMenu = ({ value, onChange, optionList }) => {
+// React.memo는 컴포넌트를 감싸면 강화된 컴포넌트를 돌려주는 고차 컴포넌트
+// 고차 컴포넌트란 컴포넌트를 가져와 새 컴포넌트를 반환
+// React.memo를 통해서 만들어진 고차 컴포넌트는 전달받는 prop이 값이 바뀌지 않으면 렌더링이 일어나지 않게 해주는 성능 최적화 기법
+const ControlMenu = React.memo(({ value, onChange, optionList }) => {
   return (
     <select
       value={value}
@@ -29,7 +32,7 @@ const ControlMenu = ({ value, onChange, optionList }) => {
       ))}
     </select>
   );
-};
+});
 
 const DiaryList = ({ diaryList }) => {
   const navigate = useNavigate();
@@ -58,9 +61,9 @@ const DiaryList = ({ diaryList }) => {
 
     const filteredList =
       filter === "all" ? copyList : copyList.filter((it) => filterCallBack(it));
-    console.log(filteredList);
+    // console.log(filteredList);
     const sortedList = filteredList.sort(compare);
-    console.log(sortedList)
+    // console.log(sortedList)
     return sortedList;
   };
 
