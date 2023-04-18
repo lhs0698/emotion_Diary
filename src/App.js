@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -30,50 +30,29 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+  localStorage.setItem("diary", JSON.stringify(newState));
   return newState;
 };
 
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-const dummyData = [
-  {
-    id: 1,
-    emotion: 1,
-    content: "오늘의 일기",
-    date: 1681216150460,
-  },
-  {
-    id: 2,
-    emotion: 2,
-    content: "오늘의 일기2",
-    date: 1681216150475,
-  },
-  {
-    id: 3,
-    emotion: 3,
-    content: "오늘의 일기3",
-    date: 1681216150479,
-  },
-  {
-    id: 4,
-    emotion: 4,
-    content: "오늘의 일기4",
-    date: 1681216150483,
-  },
-  {
-    id: 5,
-    emotion: 5,
-    content: "오늘의 일기5",
-    date: 1681216150490,
-  },
-];
-
-// console.log(new Date().getTime())
-
 function App() {
-  const [data, dispatch] = useReducer(reducer, dummyData);
-  const dataId = useRef(6);
+  const [data, dispatch] = useReducer(reducer, []);
+
+  useEffect(() => {
+    const localData = localStorage.getItem("diary");
+    if (localData) {
+      const diaryList = JSON.parse(localData).sort(
+        (a, b) => parseInt(b.id) - parseInt(a.id)
+      );
+      dataId.current = parseInt(diaryList[0].id) + 1;
+
+      dispatch({type : "INIT" , data : diaryList})
+    }
+  }, []);
+
+  const dataId = useRef(0);
   // useRef(0)이라면 새 일기를 추가할때 key가 같은것이 생성되서 버그가 생긴다.
   // 추가
   const onCreate = (date, content, emotion) => {
